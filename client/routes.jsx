@@ -8,7 +8,7 @@ import {AppLayout} from './layout.jsx';
 import {TweetStream} from './components/tweet_stream.jsx';
 import {Profile} from './components/profile.jsx';
 import {Notifications} from './components/notifications.jsx';
-import {SignUp} from './components/signup.jsx';
+import SignUp from './components/signup.jsx';
 import SignIn from './components/signin.jsx';
 
 FlowRouter.route("/", {
@@ -53,5 +53,13 @@ FlowRouter.route("/sign-in", {
     mount(AppLayout, {
       content: <SignIn />
     });
+  }
+});
+
+FlowRouter.route("/sign-out", {
+  name: 'SignOut',
+  action() {
+    Meteor.logout();
+    FlowRouter.go('/sign-in')
   }
 });

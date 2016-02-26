@@ -1,6 +1,12 @@
 import React from 'react';
 
 class SignIn extends React.Component {
+  signIn(event) {
+    event.preventDefault();
+    username = this.refs.username.value;
+    password = this.refs.password.value;
+    Meteor.loginWithPassword(username, password, (error) => {error ? console.log(error) : FlowRouter.go('/')})
+  }
   render() {
     return (
       <div className="container">
@@ -14,13 +20,13 @@ class SignIn extends React.Component {
             </div>
 
             <div className="at-pwd-form">
-              <form role="form" id="at-pwd-form" noValidate="" action="#" method="POST">
+              <form onSubmit={this.signIn.bind(this)} role="form" id="at-pwd-form" noValidate="" action="#" method="POST">
                 <fieldset>
                   <div className="at-input form-group has-feedback">
                     <label className="control-label" htmlFor="at-field-email">
                       Email
                     </label>
-                    <input type="email" className="form-control" id="at-field-email" name="at-field-email" placeholder="Email" autoCapitalize="none" autoCorrect="off" />
+                    <input type="email" ref="username" className="form-control" id="at-field-email" name="at-field-email" placeholder="Email" autoCapitalize="none" autoCorrect="off" />
 
                     <span className="help-block hide"></span>
                   </div>
@@ -28,7 +34,7 @@ class SignIn extends React.Component {
                     <label className="control-label" htmlFor="at-field-password">
                       Password
                     </label>
-                    <input type="password" className="form-control" id="at-field-password" name="at-field-password" placeholder="Password" autoCapitalize="none" autoCorrect="off" />
+                    <input type="password" ref="password" className="form-control" id="at-field-password" name="at-field-password" placeholder="Password" autoCapitalize="none" autoCorrect="off" />
 
                     <span className="help-block hide"></span>
                   </div>
