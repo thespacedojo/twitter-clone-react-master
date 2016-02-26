@@ -59,7 +59,7 @@ export const TweetStream = ({tweets}) => (
 
           {
             tweets.map(function(tweet) {
-              return <Tweet tweet={tweet} />
+              return <Tweet key={tweet._id} tweet={tweet} />
             })
           }
 
