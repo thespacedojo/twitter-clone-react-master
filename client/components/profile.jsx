@@ -2,9 +2,18 @@ import React from 'react';
 import {Tweet} from './tweet.jsx';
 
 class Profile extends React.Component {
+  constructor() {
+    super();
+    this.followUser = this.followUser.bind(this);
+    this.unfollowUser = this.unfollowUser.bind(this);
+  }
   followUser(event) {
     const userId = this.props.user._id
     Meteor.call('followUser', userId);
+  }
+  unfollowUser(event) {
+    const userId = this.props.user._id
+    Meteor.call('unfollowUser', userId);
   }
   following() {
     if (this.props.currentUser.profile && this.props.currentUser.profile.followingIds) {
@@ -40,7 +49,7 @@ class Profile extends React.Component {
 
             <ul className="nav navbar-nav navbar-right">
               <li className="follow-me">
-              {this.following() ? null : <FollowButton followUser={this.followUser.bind(this)} /> }
+              {this.following() ? <UnfollowButton unfollowUser={this.unfollowUser} /> : <FollowButton followUser={this.followUser} /> }
               </li>
             </ul>
 
@@ -113,7 +122,11 @@ class Profile extends React.Component {
 
 
 const FollowButton = ({followUser}) => (
- <button onClick={followUser()} className="btn btn-primary"><i className="fa fa-plus"></i>&nbsp; Follow</button>
+ <button onClick={followUser} className="btn btn-primary"><i className="fa fa-plus"></i>&nbsp; Follow</button>
+)
+
+const UnfollowButton = ({unfollowUser}) => (
+ <button onClick={unfollowUser} className="btn btn-danger"><i className="fa fa-minus"></i>&nbsp; Unfollow</button>
 )
 
 export {Profile}
